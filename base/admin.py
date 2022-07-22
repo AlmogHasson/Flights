@@ -8,7 +8,7 @@ admin.site.register (Admin),
 class Ticket_Admin(admin.ModelAdmin):
     #ALC= AIRLINE COMPANY
     model = Ticket
-    list_display = ['_id', 'flight','customer'] #Indicates which fields will show
+    list_display = ['id','flight','customer'] #Indicates which fields will show
 
     def get_name(self, obj):
         return {
@@ -23,7 +23,7 @@ admin.site.register(Ticket, Ticket_Admin)
 class Customer_Admin(admin.ModelAdmin):
     #ALC= AIRLINE COMPANY
     model = Customer
-    list_display = ['_id', 'f_name','l_name',
+    list_display = ['id','f_name','l_name',
     'address','phone_No','credit_Card','user'] #Indicates which fields will show
 
     def get_name(self, obj):
@@ -47,8 +47,8 @@ admin.site.register(Customer, Customer_Admin)
 class Flight_Admin(admin.ModelAdmin):
     #ALC= AIRLINE COMPANY
     model = Flight
-    list_display = [
-        '_id', 'airline_company',
+    list_display = ['id',
+         'airline_company',
         'origin_country','destination_country',
         'departure','landing_time'] #Indicates which fields will show
 
@@ -71,7 +71,7 @@ admin.site.register(Flight, Flight_Admin)
 class ALC_Admin(admin.ModelAdmin):
     #ALC= AIRLINE COMPANY
     model = Airline_Company
-    list_display = ['_id', 'name','country','user'] #Indicates which fields will show
+    list_display = ['id','name','country','user'] #Indicates which fields will show
 
     def get_name(self, obj):
         return {
@@ -98,7 +98,7 @@ admin.site.register(User_Role, RolesAdmin)
 
 class CountrieAdmin(admin.ModelAdmin):
     model = Countrie
-    list_display = ['_id', 'name'] #Indicates which fields will show
+    list_display = [ 'id','name'] #Indicates which fields will show
 
     def get_name(self, obj):
         return obj.countrie.name

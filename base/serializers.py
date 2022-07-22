@@ -1,5 +1,5 @@
 from rest_framework.serializers import ModelSerializer
-from base.models import Customer, Airline_Company
+from base.models import Customer, Airline_Company, Ticket
  
  
 class Serializer(ModelSerializer):
@@ -7,9 +7,9 @@ class Serializer(ModelSerializer):
         model = Customer
         fields = '__all__'
 
-class Serializer(ModelSerializer):
+class TicketSerializer(ModelSerializer):
 
     class Meta:
-        model = Airline_Company
+        model = Ticket
         fields = '__all__'
 

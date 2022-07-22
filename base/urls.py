@@ -10,7 +10,7 @@ from rest_framework_simplejwt.views import (
 urlpatterns = [
     path('', views.getRoutes),
     path('customer/', views.getDetails),
-    # path('one/', views.getOneNote),
+    path('usertickets/', views.userTicketsPreview),
     path('addticket/', views.addTicket),
     path('register/', views.register),
  

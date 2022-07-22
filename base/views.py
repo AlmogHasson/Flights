@@ -1,6 +1,4 @@
-from http.client import HTTPResponse
 from django.http import JsonResponse
-from rest_framework import permissions
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
@@ -8,8 +6,8 @@ from django.contrib.auth.models import User
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 
-from base.models import Ticket
-from .serializers import Serializer
+from base.models import Customer, Flight, Ticket
+from .serializers import Serializer, TicketSerializer
 
 #Login
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
@@ -21,7 +19,7 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         token['username'] = user.password
         return token
  
-#login token
+#token
 class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
  
@@ -52,11 +50,12 @@ def register(request):
     return JsonResponse({"done":"tes"} )
 
 
-#Get Details(currently customers)
+#Get Details(currently customer details)
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def getDetails(request):
     user = request.user
+
     print(user)
     details = user.customer_set.all()
     print(details)
@@ -68,13 +67,21 @@ def getDetails(request):
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def addTicket(request):
-    Ticket.objects.create(
-        
-        
-    )
-    # user = request.user
-    # (body=request.data["notebody"],user=user)
-    # # notes = user.note_set.all()
-    # # print(notes)
-    # # serializer = NoteSerializer(notes, many=True)
-    # return Response(serializer.data)
+    customer=request.user.id
+    print(customer)
+    flight = request.data["id"]
+    print(flight)
+    Ticket.objects.create(flight_id=flight ,customer_id=customer)
+    return JsonResponse({"test":"successful"}, )
+
+
+#Show logged user Tickets
+@api_view(['POST','GET'])
+@permission_classes([IsAuthenticated])
+def userTicketsPreview(request):
+    user=request.user
+    # print(user)
+    products = Ticket.objects.filter(customer=user.id)
+    # print(products)
+    serializer = TicketSerializer(products, many=True)
+    return Response(serializer.data)
