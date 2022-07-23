@@ -5,9 +5,12 @@ from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth.models import User
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
+from base.models import Flight, Ticket
+from .serializers import FlightSerializer, Serializer, TicketSerializer
+from rest_framework.views import APIView
+from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework import status
 
-from base.models import Customer, Flight, Ticket
-from .serializers import Serializer, TicketSerializer
 
 #Login
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
@@ -55,7 +58,6 @@ def register(request):
 @permission_classes([IsAuthenticated])
 def getDetails(request):
     user = request.user
-
     print(user)
     details = user.customer_set.all()
     print(details)
@@ -85,3 +87,25 @@ def userTicketsPreview(request):
     # print(products)
     serializer = TicketSerializer(products, many=True)
     return Response(serializer.data)
+
+# Logout
+class LogoutView(APIView):
+    permission_classes = (IsAuthenticated,)
+    def post(self, request):
+        try:
+            refresh_token = request.data["refresh_token"]
+            token = RefreshToken(refresh_token)
+            token.blacklist()
+            return Response(status=status.HTTP_205_RESET_CONTENT)
+        except Exception as e:
+            return Response(status=status.HTTP_400_BAD_REQUEST )
+
+#Show All Flights
+@api_view(['POST'])
+def allFlights(request):
+    user=request.user
+    print(user)
+    flights=Flight.objects.all()
+    serializer = FlightSerializer(flights, many=True)
+    return Response(serializer.data)
+    #later add to show only future flights and maybe past flights too as an option
