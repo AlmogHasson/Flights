@@ -100,11 +100,13 @@ class LogoutView(APIView):
         except Exception as e:
             return Response(status=status.HTTP_400_BAD_REQUEST )
 
+
 #Show All Flights
-@api_view(['POST'])
+#at http://127.0.0.1:8000/flights/
+@api_view(['POST','GET'])
 def allFlights(request):
-    user=request.user
-    print(user)
+    # user=request.user
+    # print(user)
     flights=Flight.objects.all()
     serializer = FlightSerializer(flights, many=True)
     return Response(serializer.data)
