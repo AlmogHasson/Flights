@@ -1,6 +1,6 @@
 from re import A
 from django.contrib import admin
-from base.models import Customer, Ticket ,Countrie, Airline_Company, Flight, User_Role, Admin
+from base.models import Customer, Ticket ,Country, Airline_Company, Flight, User_Role, Admin
 
 # Register your models here.
 admin.site.register (Admin),
@@ -96,12 +96,12 @@ class RolesAdmin(admin.ModelAdmin):
 admin.site.register(User_Role, RolesAdmin)
 
 
-class CountrieAdmin(admin.ModelAdmin):
-    model = Countrie
+class CountryAdmin(admin.ModelAdmin):
+    model = Country
     list_display = [ 'id','name'] #Indicates which fields will show
 
     def get_name(self, obj):
-        return obj.countrie.name
-    get_name.short_description = 'Countrie Name'  #Renames column head
+        return obj.country.name
+    get_name.short_description = 'Country Name'  #Renames column head
 
-admin.site.register(Countrie, CountrieAdmin)
+admin.site.register(Country, CountryAdmin)

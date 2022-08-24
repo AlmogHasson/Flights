@@ -37,7 +37,7 @@ export const flightSlice = createSlice({
   extraReducers: builder => {
     //pending - loading
     builder.addCase(fetchAllFlights.pending, state => {
-      state.loading = true
+      state.status = 'loading'
       
     })
     // success - load the data into the flights arr
@@ -49,10 +49,8 @@ export const flightSlice = createSlice({
     })
     // rejected - get error message
     builder.addCase(fetchAllFlights.rejected, (state, action) => {
-      state.loading = false
+      state.status = 'idle'
       state.flightArr = []
-      state.error = action.error.message
-      console.log(state.error)
     })
   }
 })

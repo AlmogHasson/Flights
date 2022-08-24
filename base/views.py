@@ -6,28 +6,33 @@ from django.contrib.auth.models import User
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 from base.models import Flight, Ticket
-from .serializers import FlightSerializer, Serializer, TicketSerializer
+from .serializers import FlightSerializer, CustomerSerializer, TicketSerializer
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework import status
 
 
-#Login
+
+#------------------------------------------------------------  Login  -----------------------------------------------------------------------
+#
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod  #doesnt create a class object
     def get_token(cls, user):
         token = super().get_token(user)
         # Add custom claims
         token['username'] = user.username
-        token['username'] = user.password
+        token['password'] = user.password #######
         return token
- 
-#token
+
+#----------------------------------------------------------   token  ------------------------------------------------------------------------
+
+
 class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
- 
 
-#Homepage - Routes
+
+#------------------------------------------------------  Homepage - Routes  -----------------------------------------------------------------
+
 @api_view(['GET'])
 def getRoutes(request):
     routes = [
@@ -35,13 +40,15 @@ def getRoutes(request):
         '/refresh',
         '/register/',
         '/admin/',
+        '/flights',
 
     ]
     return Response(routes)
 
 # //from django.contrib.admin.views.decorators import //staff_member_required @staff_member_required
  
-#Registration
+#-----------------------------------------------------------------  Registration  -----------------------------------------------------------
+
 @api_view(['POST'])
 def register(request):
     User.objects.create_user(
@@ -53,7 +60,8 @@ def register(request):
     return JsonResponse({"done":"tes"} )
 
 
-#Get Details(currently customer details)
+#-----------------------------------------------  Get Details(currently customer details) ---------------------------------------------------
+
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def getDetails(request):
@@ -61,11 +69,11 @@ def getDetails(request):
     print(user)
     details = user.customer_set.all()
     print(details)
-    serializer = Serializer(details, many=True)
+    serializer = CustomerSerializer(details, many=True)
     return Response(serializer.data)
 
- 
-#Add Ticket to a customer
+#------------------------------------------------------  Add Ticket to a customer   ---------------------------------------------------------
+
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def addTicket(request):
@@ -76,8 +84,8 @@ def addTicket(request):
     Ticket.objects.create(flight_id=flight ,customer_id=customer)
     return JsonResponse({"test":"successful"}, )
 
+#------------------------------------------------------  Show logged user Tickets  ---------------------------------------------------------
 
-#Show logged user Tickets
 @api_view(['POST','GET'])
 @permission_classes([IsAuthenticated])
 def userTicketsPreview(request):
@@ -88,7 +96,7 @@ def userTicketsPreview(request):
     serializer = TicketSerializer(products, many=True)
     return Response(serializer.data)
 
-# Logout
+#--------------------------------------------------------------  Logout  -------------------------------------------------------------------
 class LogoutView(APIView):
     permission_classes = (IsAuthenticated,)
     def post(self, request):
@@ -101,8 +109,9 @@ class LogoutView(APIView):
             return Response(status=status.HTTP_400_BAD_REQUEST )
 
 
-#Show All Flights
-#at http://127.0.0.1:8000/flights/
+#----------------------------------------------------------  Show All Flights  ------------------------------------------------------------
+#--------------------------------------------------- at http://127.0.0.1:8000/flights/ ----------------------------------------------------
+
 @api_view(['POST','GET'])
 def allFlights(request):
     # user=request.user
@@ -110,4 +119,6 @@ def allFlights(request):
     flights=Flight.objects.all()
     serializer = FlightSerializer(flights, many=True)
     return Response(serializer.data)
+    
+    #add get single by id
     #later add to show only future flights and maybe past flights too as an option

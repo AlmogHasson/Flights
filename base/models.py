@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 
-class Countrie(models.Model):
+class Country(models.Model):
     name = models.CharField(max_length=50, unique=True)
 
     fields =['name']
@@ -18,7 +18,7 @@ class User_Role(models.Model):
     Airline_Company='Airline Company'
     Admin='Admin'
 
-    ROLE_CHOICES = [
+    ROLE_CHOICES = [ 
     ('Customer', 'Customer'),
     ('Airline Company', 'Airline Company'),
     ('Admin', 'Admin'),
@@ -34,7 +34,7 @@ class User_Role(models.Model):
 
 class Airline_Company(models.Model):
     name = models.CharField(max_length=50, unique=True)
-    country = models.ForeignKey(Countrie, on_delete=models.CASCADE)
+    country = models.ForeignKey(Country, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)      
 
     fields =['name','country','user']
@@ -42,13 +42,13 @@ class Airline_Company(models.Model):
         return f'{self.name} - {self.country}'
 
 
-
 class Flight(models.Model):
     airline_company =models.ForeignKey(Airline_Company, on_delete=models.CASCADE)
-    origin_country =models.ForeignKey(Countrie, on_delete=models.CASCADE)
-    destination_country = models.ForeignKey(Countrie,related_name='dest_id', on_delete=models.CASCADE)
+    origin_country =models.ForeignKey(Country, on_delete=models.CASCADE)
+    destination_country = models.ForeignKey(Country,related_name='dest_id', on_delete=models.CASCADE)
     departure=models.DateTimeField()
     landing_time=models.DateTimeField()
+    
 
     fields =['airline_company','origin_country','destination_country','departure','landing_time']
     def __str__(self):
@@ -87,7 +87,4 @@ class Admin(models.Model):
     fields =['f_name','l_name','user']
     def __str__(self):
         return f'{self.f_name} - {self.l_name} - {self.user}'
-
-
-
 
