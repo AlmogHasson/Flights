@@ -7,6 +7,9 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Paper from '@mui/material/Paper';
 import Draggable from 'react-draggable';
+import InfoIcon from '@mui/icons-material/Info';
+
+
 
 function PaperComponent(props) {
   return (
@@ -30,11 +33,18 @@ export default function DraggableDialog(props) {
     setOpen(false);
   };
 
+  const convertDate=(date)=>{
+    var d = new Date(date);
+   return d.toLocaleString();
+}
+
   return (
     <div>
-      <Button variant="outlined" onClick={handleClickOpen}>
-        Open draggable dialog
+      <Button startIcon={<InfoIcon/>}  variant="contained"  onClick={handleClickOpen}>
+        View more details
       </Button>
+
+      
       <Dialog
         open={open}
         onClose={handleClose}
@@ -42,13 +52,15 @@ export default function DraggableDialog(props) {
         aria-labelledby="draggable-dialog-title"
       >
         <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
-          Subscribe
+        From: {props.flight.origin_country.name} - To: {props.flight.destination_country.name}
         </DialogTitle>
         <DialogContent>
           <DialogContentText>
-            {props.flight.destination_country.name}
-            To subscribe to this website, please enter your email address here. We
-            will send updates occasionally.
+            Flight departing from: {props.flight.origin_country.name}<br/>
+            Time of departure: {convertDate(props.flight.departure)}<br/>
+            Destination country: {props.flight.destination_country.name}<br/>
+            Estimated time of landing: {convertDate(props.flight.landing_time)}
+            
           </DialogContentText>
         </DialogContent>
         <DialogActions>

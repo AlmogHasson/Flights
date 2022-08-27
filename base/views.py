@@ -51,13 +51,16 @@ def getRoutes(request):
 
 @api_view(['POST'])
 def register(request):
-    User.objects.create_user(
-        username=request.data['username'],
-        email=request.data['email'],
-        password=request.data['pwd'],)
-        # is_staff=request.data['is_staff'],
-        # is_superuser=request.data['is_SU']
-    return JsonResponse({"done":"tes"} )
+    if request.method =='POST':
+        User.objects.create_user(
+            username=request.data['username'],
+            email=request.data['email'],
+            password=request.data['password'],)
+            # is_staff=request.data['is_staff'],
+            # is_superuser=request.data['is_SU']
+        return JsonResponse({"done":"tes"} )
+    else:
+        return('error')
 
 
 #-----------------------------------------------  Get Details(currently customer details) ---------------------------------------------------

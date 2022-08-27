@@ -1,5 +1,4 @@
 import * as React from 'react';
-import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
@@ -27,10 +26,6 @@ export default function FlightAlbum() {
         dispatch(fetchAllFlights())
     }, [])
 
-    const convertDate=(date)=>{
-        var d = new Date(date);
-       return d.toLocaleString();
-    }
 
     return (
         <ThemeProvider theme={theme}>
@@ -54,13 +49,11 @@ export default function FlightAlbum() {
                                             {flight.airline_company.name}
                                         </Typography>
                                         <Typography>
-                                            From: {flight.origin_country.name} Departure: {convertDate(flight.departure)} <br />
-                                            To: {flight.destination_country.name} Landing Time: {convertDate(flight.landing_time)}
+                                            From: {flight.origin_country.name} - TO: {flight.destination_country.name}
                                         </Typography>
                                     </CardContent>
                                     <CardActions>
                                         <DraggableDialog flight={flight}></DraggableDialog>
-                                        <Button size="small">View More Details</Button>
                                     </CardActions>
                                 </Card>
                             </Grid>
