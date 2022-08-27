@@ -22,7 +22,8 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         # Add custom claims
         token['username'] = user.username
         token['password'] = user.password #######
-        return token
+        return (token)
+        
 
 #----------------------------------------------------------   token  ------------------------------------------------------------------------
 
@@ -113,7 +114,6 @@ class LogoutView(APIView):
 
 
 #----------------------------------------------------------  Show All Flights  ------------------------------------------------------------
-#--------------------------------------------------- at http://127.0.0.1:8000/flights/ ----------------------------------------------------
 
 @api_view(['POST','GET'])
 def allFlights(request):
