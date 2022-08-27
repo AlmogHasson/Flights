@@ -60,7 +60,6 @@ export default function DraggableDialog(props) {
             Time of departure: {convertDate(props.flight.departure)}<br/>
             Destination country: {props.flight.destination_country.name}<br/>
             Estimated time of landing: {convertDate(props.flight.landing_time)}
-            
           </DialogContentText>
         </DialogContent>
         <DialogActions>

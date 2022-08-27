@@ -34,7 +34,7 @@ export default function FlightAlbum() {
                     {/* End hero unit */}
                     <Grid container spacing={5}>
                         {flights.map((flight) => (
-                            <Grid item key={flight} xs={5} sm={6} md={4}>
+                            <Grid item key={flight.id} xs={5} sm={6} md={4}>
                                 <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
                                     <CardMedia
                                         sx={{
