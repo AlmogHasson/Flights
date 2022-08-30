@@ -11,11 +11,11 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from "axios";
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 
 
-const MY_URL = 'http://127.0.0.1:8000/register/';
+
 
 function Copyright(props) {
   return (
@@ -29,18 +29,22 @@ function Copyright(props) {
     </Typography>
   );
 }
-
-
 const theme = createTheme();
+
+
+
 
 export default function SignUp() {
   
   const [success, setSuccess] = useState(false)
   const [errorMSG, setErrorMSG] = useState('')
 
+
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
+    const MY_URL = 'http://127.0.0.1:8000/register/';
 
     try {
       const res = await axios.post(MY_URL,
@@ -67,10 +71,11 @@ export default function SignUp() {
     setSuccess(true);
   };
   
+
   return (
     <>
-      {!success ? (
-
+      {success ? (
+        
         <section>
           <ThemeProvider theme={theme}>
             <Container component="main" maxWidth="xs">
@@ -113,7 +118,7 @@ export default function SignUp() {
               </Typography>
               <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
                 <Grid container spacing={2}>
-                  <Grid item xs={12} sm={6}>
+                  <Grid item xs={12}>
                     <TextField
                       name="username"
                       required

@@ -5,8 +5,8 @@ from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth.models import User
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
-from base.models import Flight, Ticket
-from .serializers import FlightSerializer, CustomerSerializer, TicketSerializer
+from base.models import Country, Flight, Ticket
+from .serializers import CountrySerializer, FlightSerializer, CustomerSerializer, TicketSerializer
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework import status
@@ -74,6 +74,14 @@ def getDetails(request):
     details = user.customer_set.all()
     print(details)
     serializer = CustomerSerializer(details, many=True)
+    return Response(serializer.data)
+
+#-----------------------------------------------  Get Details(Countries) ---------------------------------------------------
+
+@api_view(['GET'])
+def getCountries(request):
+    details = Country.objects.all()
+    serializer = CountrySerializer(details, many=True)
     return Response(serializer.data)
 
 #------------------------------------------------------  Add Ticket to a customer   ---------------------------------------------------------

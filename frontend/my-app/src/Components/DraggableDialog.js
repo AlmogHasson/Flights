@@ -9,6 +9,8 @@ import Paper from '@mui/material/Paper';
 import Draggable from 'react-draggable';
 import InfoIcon from '@mui/icons-material/Info';
 
+//switch to mui v5
+
 
 
 function PaperComponent(props) {
@@ -62,7 +64,7 @@ export default function DraggableDialog(props) {
             Estimated time of landing: {convertDate(props.flight.landing_time)}
           </DialogContentText>
         </DialogContent>
-        <DialogActions>
+        <DialogActions >
           <Button autoFocus onClick={handleClose}>
             Cancel
           </Button>

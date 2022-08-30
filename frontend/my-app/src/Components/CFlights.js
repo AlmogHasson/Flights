@@ -11,16 +11,19 @@ import { useSelector, useDispatch } from 'react-redux';
 import { fetchAllFlights, showAllFlights } from '../app/flightSlice';
 import { useEffect } from 'react';
 import DraggableDialog from './DraggableDialog';
+import Filter from './Filter'
+
 
 
 // image== name> according to location, display image according to flight
 
 const theme = createTheme();
+// const columns = [{ field: 'Destination Country',field: 'Origin Country', filterable: true }];
 
 export default function FlightAlbum() {
     const flights = useSelector(showAllFlights)
     const dispatch = useDispatch();
-    
+
 
     useEffect(() => {
         dispatch(fetchAllFlights())
@@ -28,13 +31,16 @@ export default function FlightAlbum() {
 
 
     return (
+        
         <ThemeProvider theme={theme}>
+            <Filter/>
             <main>
+                {/* {columns} */}
                 <Container sx={{ py: 8 }} maxWidth="md">
                     {/* End hero unit */}
                     <Grid container spacing={5}>
                         {flights.map((flight) => (
-                            <Grid item key={flight.id} xs={5} sm={6} md={4}>
+                            <Grid item key={flight.id} xs={6} sm={6} md={4}>
                                 <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
                                     <CardMedia
                                         sx={{

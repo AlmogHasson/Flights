@@ -7,7 +7,6 @@ import {getFlights} from './flightAPI'
 const initialState = {
   status: 'idle',
   flightArr: [], //value,
-  // URL: 'http://127.0.0.1:8000/',
 };
 
 // ------------------------------------------  -GET-  ------------------------------------------

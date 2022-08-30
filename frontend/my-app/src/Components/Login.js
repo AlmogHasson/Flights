@@ -13,7 +13,6 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from "axios";
-import { clearAllListeners } from '@reduxjs/toolkit';
 
 const MY_URL = 'http://127.0.0.1:8000/login/';
 
@@ -45,7 +44,8 @@ export default function SignIn() {
             }
           );
 
-          console.log(data.get('username'))
+          console.log(res)
+          console.log(res.accessToken);
 
         } catch (err) {
           

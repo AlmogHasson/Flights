@@ -21,9 +21,11 @@ class TicketSerializer(ModelSerializer):
         fields = '__all__'
 
 class CountrySerializer(ModelSerializer):
+
     class Meta:
         model = Country
         fields = '__all__'
+
 
 class FlightSerializer(ModelSerializer):
     destination_country= CountrySerializer()

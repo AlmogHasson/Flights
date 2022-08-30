@@ -1,11 +1,11 @@
 import axios from "axios";
-const MY_URL = 'http://127.0.0.1:8000/flights/'
+const MY_URL = 'http://127.0.0.1:8000/'
 
 
 // async(2) ----------------------------------------------------------   GET ALL FLIGHTS -------------------------------------------------
 export function getFlights() {
     return new Promise((resolve) =>
-        axios.get(MY_URL).then((res) => resolve({ data: res.data }))
+        axios.get(`${MY_URL}flights/`).then((res) => resolve({ data: res.data }))
     );
 }
 
