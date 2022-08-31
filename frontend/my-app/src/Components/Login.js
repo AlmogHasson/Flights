@@ -44,11 +44,14 @@ export default function SignIn() {
             }
           );
 
-          console.log(res)
-          console.log(res.accessToken);
+          console.log(res.data.access);
+          console.log(res.data.refresh);
+
+          localStorage.setItem('accessToken', res.data.access);
+          localStorage.setItem('refreshToken', res.data.refresh);
 
         } catch (err) {
-          
+
       };
     }
 

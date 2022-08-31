@@ -15,7 +15,7 @@ const fetchAllCountries = createAsyncThunk(
     const response = await getCountries();
     let countries = response.data
     // { code: 'AD', label: 'Andorra', phone: '376' },
-    console.log(response.data)
+    // console.log(response.data)
     countries = countries.map(item => {
       return {
           label: item.name,
